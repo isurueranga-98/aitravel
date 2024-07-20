@@ -1,17 +1,54 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter} from 'expo-router'
 import { Colors } from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
+import { signInWithEmailAndPassword } from 'firebase/auth';
+import {auth} from './../../../configs/FirebaseConfig'
 
 export default function SignIn() {
   const navigation = useNavigation();
   const router = useRouter();
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+
+
   useEffect(()=>{
     navigation.setOptions({
       headerShown:false
     })
   },[])
+
+
+  const onSingIn = () => {
+
+    if(!email && !password){
+      ToastAndroid.show('Please Enter all detatils', ToastAndroid.LONG)
+      return;
+    }
+
+    signInWithEmailAndPassword(auth, email, password)
+  .then((userCredential) => {
+    // Signed in 
+    const user = userCredential.user;
+    router.replace('/mytrip')
+    console.log(user)
+    // ...
+  })
+  .catch((error) => {
+    const errorCode = error.code;
+    const errorMessage = error.message;
+    console.log(errorCode);
+    if(errorCode = "auth/invalid-credential"){
+      ToastAndroid.show('Invalid Credential', ToastAndroid.LONG);
+    }
+  });
+  }
+
+
+
+
   return (
     <View style={{
       padding:20,
@@ -53,6 +90,7 @@ export default function SignIn() {
         }}>Email</Text>
         <TextInput 
           style={styles.input}
+          onChangeText={(value) => setEmail(value)}
         />
       </View>
 
@@ -67,13 +105,14 @@ export default function SignIn() {
         <TextInput
           style={styles.input}
           secureTextEntry={true}
+          onChangeText={(value) => setPassword(value)}
         />
       </View>
 
       <View>
 
       {/* I use TouchableOpacity but tutorial use Viwe */}
-      <TouchableOpacity onPress={()=>router.push('')} style={styles.button}><Text
+      <TouchableOpacity onPress={onSingIn} style={styles.button}><Text
               style={{
                 color:Colors.WHITE,
                 textAlign:'center',
@@ -90,9 +129,6 @@ export default function SignIn() {
               }}
             >Create Account</Text>
         </TouchableOpacity>
- 
-        
-
 
       </View>
     </View>

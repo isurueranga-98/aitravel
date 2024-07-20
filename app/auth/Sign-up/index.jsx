@@ -1,5 +1,5 @@
-import { View, Text, TextInput, StyleSheet, TouchableOpacity } from 'react-native'
-import React, { useEffect } from 'react'
+import { View, Text, TextInput, StyleSheet, TouchableOpacity, ToastAndroid } from 'react-native'
+import React, { useEffect, useState } from 'react'
 import { useNavigation, useRouter} from 'expo-router'
 import { Colors } from '@/constants/Colors'
 import { Ionicons } from '@expo/vector-icons';
@@ -9,6 +9,11 @@ export default function SignUp() {
 
   const navigation = useNavigation();
   const router = useRouter();
+
+  const [email, setEmail] = useState();
+  const [password, setPassword] = useState();
+  const [fullName, setFullName] = useState();
+
   useEffect(()=>{
     navigation.setOptions({
       headerShown:false
@@ -17,10 +22,16 @@ export default function SignUp() {
 
 
   const OnCreateAccount= () =>{
+
+    if(!email && !password && !fullName){
+      ToastAndroid.show('Please Enter all detatils', ToastAndroid.LONG)
+      return;
+    }
   createUserWithEmailAndPassword(auth, email, password)
   .then((userCredential) => {
     // Signed up 
     const user = userCredential.user;
+    router.replace('/mytrip')
     console.log(user)
     // ...
   })
@@ -81,6 +92,7 @@ export default function SignUp() {
         }}>Full Name</Text>
         <TextInput 
           style={styles.input}
+          onChangeText={(vlue)=>setFullName(vlue)}
         />
       </View>
 
@@ -93,6 +105,7 @@ export default function SignUp() {
         }}>Email</Text>
         <TextInput 
           style={styles.input}
+          onChangeText={(vlue)=>setEmail(vlue)}
         />
       </View>
 
@@ -107,6 +120,7 @@ export default function SignUp() {
         <TextInput
           style={styles.input}
           secureTextEntry={true}
+          onChangeText={(vlue)=>setPassword(vlue)}
         />
       </View>
 
@@ -116,7 +130,7 @@ export default function SignUp() {
       <View>
 
       {/* I use TouchableOpacity but tutorial use Viwe */}
-      <TouchableOpacity onPress={()=>router.push('')} style={styles.button}><Text
+      <TouchableOpacity onPress={OnCreateAccount} style={styles.button}><Text
               style={{
                 color:Colors.WHITE,
                 textAlign:'center',
