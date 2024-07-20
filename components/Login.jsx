@@ -43,7 +43,7 @@ export default function Login() {
                 textAlign:'center',
                 fontFamily:'outfit-Bold'
               }}
-            >Login with Google</Text>
+            >Let's Start</Text>
           </TouchableOpacity>
       </View>
 
