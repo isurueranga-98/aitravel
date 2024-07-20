@@ -1,13 +1,16 @@
-import { View, Text, Image, StyleSheet } from 'react-native'
+import { View, Text, Image, StyleSheet, TouchableOpacity } from 'react-native'
 import React from 'react'
 import { Colors } from '@/constants/Colors'
+import { useRouter } from 'expo-router'
 
 export default function Login() {
+  const router = useRouter();
+
   return (
     <View>
       <Image source={require('./../assets/images/adaptive-icon.png')}
         style={{
-          height:500,
+          height:600,
           width:'auto'
         }}
       />
@@ -34,13 +37,14 @@ export default function Login() {
           metus nec nunc scelerisque ultrices. Nullam ac neque non ex
           sollicitudin varius. Nulla facilisi. 
         </Text>
-          <View style={styles.button}><Text
-            style={{
-              color:Colors.WHITE,
-              textAlign:'center',
-              fontFamily:'outfit-Bold'
-            }}
-          >Login with Google</Text></View>
+          <TouchableOpacity onPress={()=>router.push('auth/sign-in')} style={styles.button}><Text
+              style={{
+                color:Colors.WHITE,
+                textAlign:'center',
+                fontFamily:'outfit-Bold'
+              }}
+            >Login with Google</Text>
+          </TouchableOpacity>
       </View>
 
 
