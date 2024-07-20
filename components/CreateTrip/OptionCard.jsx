@@ -11,20 +11,20 @@ export default function CreateTripCard({option,selectedTravaler}) {
         justifyContent:'space-between',
         backgroundColor:'#f2f2f2',
         borderRadius:15,
-      }, selectedTravaler==option.title&&{borderWidth:2, backgroundColor:Colors.PRIMARY}]}> 
+      }, selectedTravaler?.id==option?.id&&{borderWidth:2, backgroundColor:Colors.PRIMARY}]}> 
       <View>
         <Text style={
           [{
             fontSize: 20,
             fontFamily: 'outfit-Medium'
-          },selectedTravaler==option.title&&{color:Colors.WHITE}]
+          },selectedTravaler?.id==option?.id&&{color:Colors.WHITE}]
         }>{option?.title}</Text>
 
         <Text style={[{
           fontSize:17,
           fontFamily:'outfit',
           color:Colors.GRAY
-        },selectedTravaler==option.title&&{color:Colors.WHITE}]}>
+        },selectedTravaler?.id==option?.id&&{color:Colors.WHITE}]}>
           {option?.desc}
         </Text>
       </View>
