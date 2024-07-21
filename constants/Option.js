@@ -29,3 +29,24 @@ export const SelectTravelerList =[
     people:'3 to 5 People'
   },
 ]
+
+export const SelectBudgetOption = [
+  {
+    id:1,
+    title:'Cheap',
+    desc:'Stay Conscious of Cost',
+    icon:'😃'
+  },
+  {
+    id:2,
+    title:'Moderate',
+    desc:'Stay Conscious of Cost',
+    icon:'🙍‍♂️'
+  },
+  {
+    id:3,
+    title:'Expensive',
+    desc:'Stay Conscious of Cost',
+    icon:'🗒️'
+  }
+]
