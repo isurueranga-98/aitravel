@@ -1,4 +1,4 @@
-import { View, Text, FlatList, TouchableOpacity } from 'react-native'
+import { View, Text, FlatList, TouchableOpacity, ToastAndroid } from 'react-native'
 import React, { useContext, useEffect, useState } from 'react';
 import { useNavigation, useRouter } from 'expo-router';
 import { Colors } from '@/constants/Colors';
@@ -13,7 +13,7 @@ export default function SelectBudget() {
 
   const navigation = useNavigation();
   const [selectedOption, setSelectedOption] = useState()
-
+  const {tripData, setTripData} = useContext(CreateTripContext);
   const router=useRouter()
 
   useEffect(() => {
@@ -23,6 +23,22 @@ export default function SelectBudget() {
       headerTitle: '',
     });
   }, [navigation]);
+
+  useEffect(()=>{
+     selectedOption && setTripData({
+      ...tripData,
+      budget:selectedOption?.title
+    });
+  },[selectedOption])
+
+  const onClickContinue= () =>{ 
+      if(!selectedOption){
+        ToastAndroid.show('Select Your Budget', ToastAndroid.LONG);
+        return;
+      }
+
+      router.push('/create-trip/review-trip');
+  }
 
 
   return (
@@ -51,12 +67,35 @@ export default function SelectBudget() {
 
           <FlatList 
             data={SelectBudgetOption}
-            renderItem={({item,index})=>{
-              <View>
+            renderItem={({item,index})=>(
+              <TouchableOpacity onPress={()=> setSelectedOption(item)} style={{
+                marginVertical:10
+              }}>
                 <OptionCard option={item} selectedOption={selectedOption}/>
-              </View>
-            }}
+              </TouchableOpacity>
+  )}
           />
+
+
+
+      <TouchableOpacity onPress={()=>onClickContinue()} style={{
+        backgroundColor:Colors.PRIMARY,
+        padding:10,
+        borderRadius:15,
+        marginTop:20
+      }}>
+
+        
+        <Text style={{
+          fontSize:20,
+          fontFamily:'outfit-Medium',
+          color:Colors.WHITE,
+          textAlign:'center'
+        }}>Next</Text>
+      </TouchableOpacity>
+
+
+
       </View>
     </View>
   );
