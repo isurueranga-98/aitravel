@@ -11,7 +11,7 @@ export default function ReviewTrip() {
   const navigation = useNavigation();
 
   const {tripData,setTripData} = useContext(CreateTripContext);
-
+  const router = useRouter()
   useEffect(() => {
     navigation.setOptions({
       headerShown: true,
@@ -141,7 +141,7 @@ export default function ReviewTrip() {
           </View>
 
 
-          <TouchableOpacity onPress={()=>router.push('/create-trip/select-dates')} style={{
+          <TouchableOpacity onPress={()=>router.replace('/create-trip/generate-trip')} style={{
         backgroundColor:Colors.PRIMARY,
         padding:10,
         borderRadius:15,

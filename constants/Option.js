@@ -50,3 +50,5 @@ export const SelectBudgetOption = [
     icon:'🗒️'
   }
 ]
+
+export const AI_PROMT = 'Generate Travel Plan for Location : {location}, for {totalDays} Days and {totalNights} Night for {traveler} with a {budget} budget with a Flight Details, Flight Price with Booking URL, Hotel Option list with Hotel Name,Hotel address, Price Hotel Image URL,Geo Coordinates, ticket Price, Time to travel each of the location for {totalDays} days and {totalNights}  with each day plan with best time to visit in JSON format.'
